@@ -1,3 +1,10 @@
+let uid=localStorage.getItem("uid");
+
+if(uid){
+    window.location="profile.html"
+}
+
+
 let signup = () => {
     window.location = "signup.html"
 }
@@ -105,28 +112,40 @@ let signIn = () => {
     let emailRegx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     let loader = document.getElementById('loader');
     let loaderText = document.getElementById("loaderText");
-    if(emailRegx.test(email.value)){
-        loader.style.display="block"
-        loaderText.style.display = "none"        
+    if (emailRegx.test(email.value)) {
+        loader.style.display = "block"
+        loaderText.style.display = "none"
         firebase.auth().signInWithEmailAndPassword(email.value, password.value)
-        .then((userCredential) => {
-            loader.style.display = "none"
-            loaderText.style.display = "block"
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Log in Successfull'
+            .then((res) => {
+                localStorage.setItem("uid",res.user.uid)
+                loader.style.display = "none"
+                loaderText.style.display = "block"
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Log in Successfull',
+                    showConfirmButton: false
+                })
+                setTimeout(() => {
+                    location.href = "profile.html"
+                }, 2000)
+
             })
-            setTimeout(() => {
-                location.href = "profile.html"              
-            }, 2000)
-                   
+            .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `${error.message}`
+                })
+                loader.style.display = "none"
+                loaderText.style.display = "block"
+            });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Enter Email Address!',
+            showConfirmButton: false
         })
-        .catch((error) => {
-            loader.style.display = "none"
-            loaderText.style.display = "block"
-        });
-    }else{
-        alert("email daal")
     }
 }
