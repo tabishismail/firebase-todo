@@ -1,0 +1,9 @@
+.text-primary {
+    color: #ffffff !important;
+}
+#loader{
+    display:none;
+}
+#loaderText{
+    display:block;
+}
