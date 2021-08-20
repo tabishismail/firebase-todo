@@ -1,9 +1,9 @@
-let uid=localStorage.getItem("uid");
-
-if(uid){
-    window.location="profile.html"
-}
-
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        window.location="profile.html"
+    } else {
+    }
+  });
 
 let signup = () => {
     window.location = "signup.html"
