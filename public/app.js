@@ -29,7 +29,8 @@ let register = () => {
         lastName: lastName.value,
         userName: userName.value,
         email: email.value,
-        password: password.value
+        password: password.value,
+        id:id
     }
     if (empty.test(firstName.value)) {
         if (empty.test(lastName.value)) {
